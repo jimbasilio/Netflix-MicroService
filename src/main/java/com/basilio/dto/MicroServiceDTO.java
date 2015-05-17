@@ -1,7 +1,6 @@
 package com.basilio.dto;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import org.springframework.util.Assert;
@@ -22,16 +21,16 @@ public class MicroServiceDTO {
 
     public String getTime() {
         Assert.notNull(this.time);
-        return time.format(DateTimeFormatter.ofPattern("h:m:s.Sa"));
+        return time.toString();
     }
 
     public void setTime(LocalTime time) {
         this.time = time;
     }
 
-    public String getUUID() {
+    public UUID getUUID() {
         Assert.notNull(this.uuid);
-        return uuid.toString();
+        return uuid;
     }
 
     public void setUUID(UUID uuid) {
