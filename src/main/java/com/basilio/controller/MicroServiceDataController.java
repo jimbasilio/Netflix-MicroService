@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.basilio.dto.MicroServiceDTO;
+import com.basilio.dto.ServiceStatusDTO;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
@@ -18,7 +19,7 @@ public class MicroServiceDataController {
 
     // not thread safe ... don't care for this purpose since a human is driving
     // this slowly
-    private boolean down = false;
+    private Boolean down = false;
 
     public MicroServiceDTO fallbackGetById(@PathVariable(value = "id") Long id) {
         MicroServiceDTO toReturn = new MicroServiceDTO();
@@ -55,5 +56,10 @@ public class MicroServiceDataController {
     @RequestMapping(value = "/up", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public void up() {
         this.down = false;
+    }
+
+    @RequestMapping(value = "/status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceStatusDTO status() {
+        return new ServiceStatusDTO(this.down);
     }
 }
